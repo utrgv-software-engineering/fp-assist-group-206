@@ -1,0 +1,24 @@
+{
+  "tests": [
+    {
+      "name": "Rspec tests",
+      "setup": "sudo gem install bundler && sudo bundle install",
+      "run": "sudo rspec",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "Cucumber tests",
+      "setup": "sudo gem install bundler && sudo bundle install && sudo yarn install",
+      "run": "sudo cucumber",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": null
+    }
+  ]
+}
