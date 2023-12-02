@@ -9,4 +9,13 @@ class User < ApplicationRecord
   after_initialize do |r|
     r.registered_courses = [] if r.registered_courses == nil
   end
+
+  def student_user?
+    return user_id == 0
+  end
+
+  def teacher_user?
+    return user_id == 1
+  end 
+  
 end
