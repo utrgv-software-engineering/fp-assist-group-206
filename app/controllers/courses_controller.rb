@@ -77,6 +77,34 @@ class CoursesController < ApplicationController
     redirect_back fallback_location: root_path, notice: "Course was successfully dropped." 
   end
 
+  def search
+    crn = params[:crn]
+    course_name = params[:course_name]
+  
+    if crn.present?
+      # Find the course with the specified CRN
+      @course = Course.find_by(CRN: crn)
+      if @course
+        # Set flash message
+        flash[:notice] = "Course found with CRN #{crn}."
+        # Redirect to the show page for the course
+        redirect_to course_path(@course)
+      else
+        # Handle the case when no course is found with the specified CRN
+        flash[:alert] = "No course found with CRN #{crn}."
+        redirect_to courses_path
+      end
+    elsif course_name.present?
+      # Search for courses with the specified name or partial name
+      @courses = Course.where("Name LIKE ?", "%#{course_name}%")
+      render :index
+    else
+      # Handle the case when no search criteria is provided
+      flash[:alert] = "Please provide search criteria."
+      redirect_to courses_path
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
