@@ -8,4 +8,4 @@ class AddUserIdToUsers < ActiveRecord::Migration[7.1]
     t.timestamps
     end
   end 
-end
+end  
