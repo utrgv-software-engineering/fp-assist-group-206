@@ -10,7 +10,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body> 
   <div class="nav-link">
     <% if user_signed_in? %>
       <a href="/courses"> View all Courses </a> -
@@ -20,9 +20,9 @@
       <a href="/users/sign_in"> Sign In </a>
     <% end %>
   </div>
+  <p style="color: red" class="alert"><%= alert %></p>
   <%= yield %>
   <div class="search-form">
-    <p style="color: red" class="alert"><%= alert %></p>
     <%= form_tag("/courses/search", method: :post) do %>
       <label for="crn">CRN:</label>
       <%= text_field_tag "crn" %>

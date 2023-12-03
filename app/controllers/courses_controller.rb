@@ -3,7 +3,14 @@ class CoursesController < ApplicationController
   
   # GET /courses or /courses.json
   def index
-    if !user_signed_in?
+    course_ids = params[:courses]
+  
+  if course_ids.present?
+    @courses = Course.where(id: course_ids)
+  else
+    @courses = Course.all
+  end
+    if !user_signed_in? && !params[:course_name].present?
       redirect_to new_user_session_path
     end
   end
@@ -80,7 +87,6 @@ class CoursesController < ApplicationController
   def search
     crn = params[:crn]
     course_name = params[:course_name]
-  
     if crn.present?
       # Find the course with the specified CRN
       @course = Course.find_by(CRN: crn)
@@ -97,14 +103,22 @@ class CoursesController < ApplicationController
     elsif course_name.present?
       # Search for courses with the specified name or partial name
       @courses = Course.where("Name LIKE ?", "%#{course_name}%")
-      render :index
+      if @courses.present?
+        # Set flash message
+        flash.now[:notice] = "Courses found with Course Name #{course_name}."
+        # Render the view with the filtered courses
+        redirect_to courses_path(courses: @courses.pluck(:id))
+      else
+        # Handle the case when no courses are found with the specified name
+        flash[:alert] = "No courses found with Course Name #{course_name}."
+        redirect_to courses_path
+      end
     else
       # Handle the case when no search criteria is provided
       flash[:alert] = "Please provide search criteria."
       redirect_to courses_path
     end
   end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course

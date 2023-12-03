@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   delete "/courses/:id/drop/:user_id", to: "courses#drop", as: :drop_course
   # for new search feature
   post '/courses/search', to: 'courses#search'
+
 end

@@ -92,6 +92,7 @@ RSpec.describe CoursesController, type: :controller do
   describe "POST #search" do
     let!(:course1) { FactoryBot.create(:course, CRN: "12345", Name: "Software Engineering 1") }
     let!(:course2) { FactoryBot.create(:course, CRN: "789012", Name: "Physics") }
+    let!(:course3) { FactoryBot.create(:course, CRN: "12345", Name: "Software Eng") }
     # happy paths
     context "with valid CRN" do
       it "redirects to the course show page" do
@@ -101,10 +102,18 @@ RSpec.describe CoursesController, type: :controller do
     end
 
     context "with valid course name" do
-      it "renders the index page with matching courses" do
+      it "renders the page with matching courses" do
         post :search, params: { course_name: "Software Engineering 1" }
-        expect(response).to render_template(:index)
+        expect(response).to redirect_to(courses_path(courses: [course1.id])) 
         expect(assigns(:courses)).to include(course1)
+      end
+    end
+    
+    context "with valid course partial name" do
+      it "renders the page with matching courses" do
+        post :search, params: { course_name: "Software Eng" }
+        expect(response).to redirect_to(courses_path(courses: [course1.id, course3.id]))
+        expect(assigns(:courses)).to include(course3)
       end
     end
 
