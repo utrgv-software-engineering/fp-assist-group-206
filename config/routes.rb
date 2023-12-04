@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   get "/users/:id/registered_courses", to: "account#index", as: :registered_courses
   post "/courses/:id/register/:user_id", to: "courses#register", as: :register_course
   delete "/courses/:id/drop/:user_id", to: "courses#drop", as: :drop_course
+  # for new search feature
+  post '/courses/search', to: 'courses#search'
 end
