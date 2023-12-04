@@ -17,7 +17,7 @@
           <%= link_to "Registered Courses", registered_courses_path(current_user.id) %> -
           <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
     <% else %>
-          <a href="/users/sign_in"> Sign In </a>
+     <!-- <a href="/users/sign_in"> Sign In </a> -->
     <% end %>
   </div>
     <p class="alert"><%= alert %></p>
