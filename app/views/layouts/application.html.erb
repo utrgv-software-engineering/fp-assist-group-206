@@ -17,21 +17,11 @@
       <%= link_to "Registered Courses", registered_courses_path(current_user.id) %> -
       <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
     <% else %>
-      <a href="/users/sign_in"> Sign In </a>
+    <%# Remove the following line %>
+    <!-- <a href="/users/sign_in"> Sign In </a> -->
     <% end %>
   </div>
   <p style="color: red" class="alert"><%= alert %></p>
   <%= yield %>
-  <div class="search-form">
-    <%= form_tag("/courses/search", method: :post) do %>
-      <label for="crn">CRN:</label>
-      <%= text_field_tag "crn" %>
-      <br>
-      <label for="course_name">Course Name:</label>
-      <%= text_field_tag "course_name" %>
-      <br>
-      <%= submit_tag "Search" %>
-    <% end %>
-  </div>
 </body>
 </html>
