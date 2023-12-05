@@ -13,11 +13,11 @@
   <body>
   <div class="nav-link">
     <% if user_signed_in? %>
-          <a href="/courses"> View all Courses </a> -
+          <%= link_to "View all Courses", courses_path %> -
           <%= link_to "Registered Courses", registered_courses_path(current_user.id) %> -
           <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
     <% else %>
-          <a href="/users/sign_in"> Sign In </a>
+          <%= link_to "Sign In", new_user_session_path, class: "dropdown-item" %>
     <% end %>
   </div>
     <p class="alert"><%= alert %></p>
