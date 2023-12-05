@@ -34,12 +34,3 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-# Ignore assist_development and tests
-
-assist_development
-assist_development-shm
-assist_development-wal
-
-assist_test
-assist_test-shm
-assist_test-wal
