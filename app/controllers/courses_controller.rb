@@ -3,15 +3,15 @@ class CoursesController < ApplicationController
   
   # GET /courses or /courses.json
   def index
-      course_ids = params[:courses]
+    course_ids = params[:courses]
     if course_ids.present?
       @courses = Course.where(id: course_ids)
     else
       @courses = Course.all
     end
-      if !user_signed_in? && !params[:course_name].present?
-        redirect_to new_user_session_path
-      end
+    if !user_signed_in? && !params[:course_name].present?
+      redirect_to new_user_session_path
+    end
   end
 
   # GET /courses/1 or /courses/1.json
