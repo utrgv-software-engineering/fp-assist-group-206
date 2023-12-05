@@ -14,3 +14,14 @@
 </div>
 
 <%= link_to "New course", new_course_path %>
+<div class="search-form">
+    <%= form_tag("/courses/search", method: :post) do %>
+      <label for="crn">CRN:</label>
+      <%= text_field_tag "crn" %>
+      <br>
+      <label for="course_name">Course Name:</label>
+      <%= text_field_tag "course_name" %>
+      <br>
+      <%= submit_tag "Search" %>
+    <% end %>
+  </div>
