@@ -17,7 +17,7 @@
           <%= link_to "Registered Courses", registered_courses_path(current_user.id) %> -
           <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
     <% else %>
-    <%= link_to "Sign In", new_user_session_path, class: "dropdown-item" %>
+      <%= link_to "Sign In", new_user_session_path, class: "dropdown-item" %>
     <% end %>
   </div>
     <p style="color: red" class="alert"><%= alert %></p>
