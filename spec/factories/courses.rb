@@ -3,6 +3,6 @@ FactoryBot.define do
     sequence(:CRN) { |n| "#{n}#{n}#{n}#{n}#{n}" }
     sequence(:Name) {|n| "Course #{n}" }
     Description { "Course description" }
-    Capacity { 10 }
+    Capacity { 20 }
   end
 end

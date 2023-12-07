@@ -10,3 +10,10 @@ Scenario: Create a course
     And fill out the form
     Then I should be able to see that course
 
+Scenario: Create a course with low capacity
+    Given there are 2 users, teacher and student
+    And I log in as a teacher
+    And I go to the homepage
+    When I click "New course"
+    And I fill out the form with low capacity
+    Then I should not be able to create the course
