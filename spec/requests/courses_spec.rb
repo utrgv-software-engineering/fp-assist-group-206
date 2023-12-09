@@ -89,8 +89,8 @@ RSpec.describe CoursesController, type: :controller do
 
   describe "POST #search" do
     let!(:course1) { FactoryBot.create(:course, CRN: "12345", Name: "Software Engineering 1") }
-    let!(:course2) { FactoryBot.create(:course, CRN: "789012", Name: "Physics") }
-    let!(:course3) { FactoryBot.create(:course, CRN: "12345", Name: "Software Eng") }
+    let!(:course2) { FactoryBot.create(:course, CRN: "78901", Name: "Physics") }
+    let!(:course3) { FactoryBot.create(:course, CRN: "11223", Name: "Software Eng") }
     # happy paths
     context "with valid CRN" do
       it "redirects to the course show page" do

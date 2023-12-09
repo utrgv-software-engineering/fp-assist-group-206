@@ -19,4 +19,6 @@ class Course < ApplicationRecord
         end
     end
 
+    validates :CRN, presence: true, uniqueness: true, length: { is: 5 }
+
 end
