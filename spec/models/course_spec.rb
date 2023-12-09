@@ -18,4 +18,11 @@ RSpec.describe Course, type: :model do
     course = Course.new(CRN: "12345", Name: "Course name", Description: "Small description", Capacity:50)
     expect(course).to be_valid
   end
+
+  describe 'validations' do
+    it { should validate_presence_of(:CRN) }
+    it { should validate_uniqueness_of(:CRN) }
+    it { should validate_length_of(:CRN).is_equal_to(5) }
+  end
+
 end
