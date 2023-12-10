@@ -1,7 +1,7 @@
 class Course < ApplicationRecord
     validates_presence_of :CRN
     validate :capacity_maximum
-
+    validate :capacity_minimum
     # custom validator
     def capacity_maximum
         #if it is not null, if it was null then we can't compare it to zero
@@ -11,6 +11,15 @@ class Course < ApplicationRecord
             end
         end
     end
+    def capacity_minimum
+        if self.Capacity != nil
+            if self.Capacity < 20
+                errors.add(:Capacity, "Course capacity must be at least 20")
+            end
+        end
+    end
+
+    validates :CRN, presence: true, uniqueness: true, length: { is: 5 }
 
     def blank_name
 

@@ -1,19 +1,37 @@
 <p style="color: green"><%= notice %></p>
-
-<% @courses = Course.all %>
-
 <h1>Courses</h1>
 
 <div id="courses">
   <% @courses.each do |course| %>
-    <%= render course %>
+    <div class="course">
+      <p>
+      <strong>CRN:</strong>
+      <%= course.CRN %>
+    </p>
+    <p id="description-<%= course.id %>" style="display: none;"><%= course.Description %></p>
     <p>
-      <%= link_to "Show this course", course %>
+      <strong>Name:</strong>
+      <%= course.Name %>
+    </p>
+    <p>
+      <strong>Capacity:</strong>
+      <%= course.Capacity %>
+    </p>
+    <p>
+    <% if current_user.registered_courses.include? course.id %>
+    <%= button_to "Drop course", drop_course_path(course.id, current_user.id), method: :delete %>
+    <% else %>
+      <%= button_to "Register course", register_course_path(course.id, current_user.id), method: :post %>
+    <% end %>
+    </p>
+    <p>
+      <%= link_to "Show this course", course_path(course.id) %>
     </p>
   <% end %>
 </div>
 
 <%= link_to "New course", new_course_path %>
+
 <div class="search-form">
     <%= form_tag("/courses/search", method: :post) do %>
       <label for="crn">CRN:</label>

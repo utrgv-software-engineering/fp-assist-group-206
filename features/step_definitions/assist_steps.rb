@@ -5,7 +5,12 @@ Given('there are 3 courses and 2 users, teacher and student') do
     @teacher = create(:user)
     @student = create(:user)
 end
-  
+
+Given('there are 2 users, teacher and student') do 
+    @teacher = create(:user)
+    @student = create(:user)
+  end
+
 Given('I log in as a teacher') do
     visit new_user_session_path
     fill_in "user_email", with: @teacher.email
@@ -32,7 +37,7 @@ When('fill out the form') do
     fill_in "course_CRN", with: "12345"
     fill_in "course_Name", with: "Test Course"
     fill_in "course_Description", with: "Description"
-    fill_in "course_Capacity", with: "1"
+    fill_in "course_Capacity", with: "21"
     click_on "Create Course"
 end
 
@@ -40,7 +45,7 @@ Then('I should be able to see that course') do
     expect(page).to have_content("CRN: 12345")
     expect(page).to have_content("Name: Test Course")
     expect(page).to have_content("Description: Description")
-    expect(page).to have_content("Capacity: 1")
+    expect(page).to have_content("Capacity: 21")
 end
 
 Then('I should see {string}') do |string|
@@ -80,6 +85,7 @@ Then('I should see that course') do
     expect(page).to have_content(@course1.CRN)
 end
 
+# from issue RAILAST206-26 
 And('I leave the course name blank') do
     fill_in "course_CRN", with: "12345"
     fill_in "course_Name", with: nil
@@ -109,3 +115,62 @@ And('I leave the course description blank') do
     fill_in "course_Capacity", with: "21"
     click_on "Create Course"
 end
+
+When('I fill out the form with low capacity') do
+    fill_in "course_CRN", with: "12345"
+    fill_in "course_Name", with: "Test Course"
+    fill_in "course_Description", with: "Description"
+    fill_in "course_Capacity", with: "19"
+    click_on "Create Course"
+  end
+  
+  Then('I should not be able to create the course') do
+    expect(page).to have_content("Course capacity must be at least 20")
+  end
+
+  # search feature cucumber tests
+  Given('there are several courses available') do
+    @course1 = create(:course)
+    @course2 = create(:course)
+    @course3 = create(:course) 
+  end
+  
+  Given('there are users including at least one student') do
+    @student = create(:user)
+  end
+  
+  When('I enter a course name into the search field') do 
+    fill_in 'course_name', with: @course1.Name
+  end
+  
+  When('I enter a CRN into the search field') do
+    fill_in 'crn', with: @course1.CRN
+  end
+  
+  When('I click the {string} button') do |string|
+    click_on string
+  end
+  
+  Then('I should see courses with that CRN in the search results') do
+    expect(page).to have_content(@course1.CRN)
+  end
+
+  Then('I should see courses with that name in the search results') do
+    expect(page).to have_content(@course1.Name)
+  end
+  #Sad Paths for search feature
+  When('I enter an invalid CRN into the search field') do
+    fill_in 'crn', with: '000000'
+  end
+  
+  When('I enter an invalid course name into the search field') do
+    fill_in 'course_name', with: 'InvalidCourseName'
+  end
+  Then('I should see a message indicating that no course was found for CRN') do
+    expect(page).to have_content("No course found with CRN 000000.")
+  end
+  
+  Then('I should see a message indicating that no courses were found for course name') do
+    expect(page).to have_content("No courses found with Course Name InvalidCourseName.")
+  end
+
