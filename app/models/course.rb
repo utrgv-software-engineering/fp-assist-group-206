@@ -12,4 +12,15 @@ class Course < ApplicationRecord
         end
     end
 
+    def blank_name
+
+        if self.course_Name == nil 
+            errors.add(:course_Name, " can't be blank")
+        end
+
+        if self.course_Description == nil 
+            errors.add(:course_Description, " can't be blank")
+        end
+    end
+
 end

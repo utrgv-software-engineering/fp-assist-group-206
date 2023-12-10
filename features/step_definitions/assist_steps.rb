@@ -79,3 +79,33 @@ end
 Then('I should see that course') do
     expect(page).to have_content(@course1.CRN)
 end
+
+And('I leave the course name blank') do
+    fill_in "course_CRN", with: "12345"
+    fill_in "course_Name", with: nil
+    fill_in "course_Description", with: "Description"
+    fill_in "course_Capacity", with: "1"
+    click_on "Create Course"
+end
+
+Then('I should not be able to see that course') do
+    expect(page).not_to have_content(@courseA.Name)
+end
+
+Then('I should not be able to see that courseB') do
+    expect(page).not_to have_content(@courseB.Description)
+end
+
+Given('there are 2 course and 1 users, a teacher') do
+    @teacher = create(:user)
+    @courseA = create(:course)
+    @courseB = create(:course)
+end
+
+And('I leave the course description blank') do
+    fill_in "course_CRN", with: "12345"
+    fill_in "course_Name", with: "Test Course"
+    fill_in "course_Description", with: nil
+    fill_in "course_Capacity", with: "21"
+    click_on "Create Course"
+end
