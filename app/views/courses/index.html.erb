@@ -5,12 +5,13 @@
   <% @courses.each do |course| %>
     <%= render course %>
     <p>
-      <%= link_to "Show this course", course %>
+      <%= link_to "Show this course", course_path(course.id) %>
     </p>
   <% end %>
 </div>
 
 <%= link_to "New course", new_course_path %>
+
 <div class="search-form">
     <%= form_tag("/courses/search", method: :post) do %>
       <label for="crn">CRN:</label>
