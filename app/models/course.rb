@@ -1,7 +1,10 @@
 class Course < ApplicationRecord
-    validates_presence_of :CRN
+    validates_presence_of :CRN, uniqueness: true, length: { is: 5}
     validate :capacity_maximum
     validate :capacity_minimum
+    validate :validating_max_registration_cap
+    validates :CRN, presence: true, uniqueness: true, length: {is: 5}
+
     # custom validator
     def capacity_maximum
         #if it is not null, if it was null then we can't compare it to zero
@@ -19,7 +22,7 @@ class Course < ApplicationRecord
         end
     end
 
-    validates :CRN, presence: true, uniqueness: true, length: { is: 5 }
+    #validates :CRN, presence: true, uniqueness: true, length: { is: 5 }
 
     def blank_name
 
@@ -32,4 +35,9 @@ class Course < ApplicationRecord
         end
     end
 
+    def validating_max_registration_cap
+        if self.Capacity == 0
+            errors.add(:Name, "cannot be registered, course is full.")
+        end
+    end
 end
