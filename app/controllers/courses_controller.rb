@@ -3,14 +3,25 @@ class CoursesController < ApplicationController
   
   # GET /courses or /courses.json
   def index
+    # Check if the user is signed in
+    if user_signed_in?
+      # Redirect students to registered courses page
+      if current_user.id.to_i != 1
+        redirect_to registered_courses_path(id: current_user.id)
+        return
+      end
+    else
+      # Redirect non-signed-in users to sign-in page
+      redirect_to new_user_session_path
+      return
+    end
+  
+    # Rest of the code for rendering courses for other users
     course_ids = params[:courses]
     if course_ids.present?
       @courses = Course.where(id: course_ids)
     else
       @courses = Course.all
-    end
-    if !user_signed_in? && !params[:course_name].present?
-      redirect_to new_user_session_path
     end
   end
 

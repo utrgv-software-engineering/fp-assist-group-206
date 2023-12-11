@@ -4,7 +4,30 @@
 
 <div id="courses">
   <% @courses.each do |course| %>
-    <%= render course %>
+    <div class="course">
+      <p>
+      <strong>CRN:</strong>
+      <%= course.CRN %>
+    </p>
+    <p>
+    <strong>Description:</strong>
+    <%= course.Description %>
+    </p>
+    <p>
+      <strong>Name:</strong>
+      <%= course.Name %>
+    </p>
+    <p>
+      <strong>Capacity:</strong>
+      <%= course.Capacity %>
+    </p>
+    <p>
+    <% if current_user.registered_courses.include? course.id %>
+    <%= button_to "Drop course", drop_course_path(course.id, current_user.id), method: :delete %>
+    <% else %>
+      <%= button_to "Register course", register_course_path(course.id, current_user.id), method: :post %>
+    <% end %>
+    </p>
     <p>
       <%= link_to "Show this course", course %>
     </p>

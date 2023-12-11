@@ -3,9 +3,9 @@
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
 
-teacher = User.create(email: "teacher@teacher.com", password: "default123")
-student = User.create(email: "student1@student.com", password: "default123", registered_courses: ['1', '3'])
-student = User.create(email: "student2@student.com", password: "default123", registered_courses: ['2'])
+teacher = User.create(email: "teacher@teacher.com", password: "default123", user_id:1)
+student = User.create(email: "student1@student.com", password: "default123", registered_courses: ['1', '3'], user_id:0)
+student = User.create(email: "student2@student.com", password: "default123", registered_courses: ['2'], user_id:0)
 
 course1 = Course.create(CRN: "12345", Name: "Software Engineering 1", Description: "Learn about agile practices", Capacity: 35)
 course2 = Course.create(CRN: "12346", Name: "Software Engineering 2", Description: "Practice Agile", Capacity: 20)
