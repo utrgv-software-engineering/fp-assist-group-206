@@ -33,6 +33,10 @@ When('I click {string}') do |string|
     click_on string
 end
 
+And('I visit all courses')do
+  visit courses_path
+end
+
 When('fill out the form') do
     fill_in "course_CRN", with: "12345"
     fill_in "course_Name", with: "Test Course"

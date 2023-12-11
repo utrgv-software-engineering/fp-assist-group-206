@@ -6,11 +6,13 @@ Scenario: Viewing all courses
     Given there are 3 courses and 2 users, teacher and student
     And I log in as a student
     When I go to the homepage
+    When I click "View all Courses"
     Then I should see all courses
 
 Scenario: View one course
     Given there are 3 courses and 2 users, teacher and student
     And I log in as a student
     And I go to the homepage
+    When I click "View all Courses"
     When I click "Show this course" link on the first course
     Then I should see that course
