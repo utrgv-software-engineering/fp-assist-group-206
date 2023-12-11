@@ -82,6 +82,7 @@ class CoursesController < ApplicationController
   def drop
     current_user.registered_courses.delete(@course.id)
     current_user.save
+    @course.Capacity -= 1
     redirect_back fallback_location: root_path, notice: "Course was successfully dropped." 
   end
 
