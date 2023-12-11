@@ -5,8 +5,9 @@ class CoursesController < ApplicationController
   def index
     # Check if the user is signed in
     if user_signed_in?
-      # Redirect students to registered courses page
-      if current_user.id.to_i != 1
+      # Redirect students to registered courses page only once
+      if current_user.id != 1 && !session[:redirected_to_registered_courses]
+        session[:redirected_to_registered_courses] = true
         redirect_to registered_courses_path(id: current_user.id)
         return
       end
