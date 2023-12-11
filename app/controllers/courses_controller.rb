@@ -71,6 +71,8 @@ class CoursesController < ApplicationController
       redirect_to root_path
     end
 
+    @course.Capacity += 1
+
     current_user.registered_courses.append(@course.id)
     current_user.save
     redirect_back fallback_location: root_path, notice: "Course was successfully registered." 
