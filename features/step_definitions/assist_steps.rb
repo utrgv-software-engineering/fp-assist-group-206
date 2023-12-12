@@ -191,6 +191,6 @@ end
 
 # Issue RAILAST206-29
 
-Given('the course capacity is not full') do
-  @course1.Capacity != 0
+Given('the course capacity is empty') do
+  @course1.Capacity == 50
 end

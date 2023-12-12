@@ -6,10 +6,9 @@
 <% if current_user.id == 1 %>
 <% if @course.Capacity != 0 %>
   <%= link_to "Edit this course", edit_course_path(@course) %>
-<% end %> |
+<% end %><% end %> |
 <%= link_to "Back to courses", courses_path %>
-<% if @course.Capacity != 0 %>
+<% if @course.Capacity == 50 && current_user.id == 1 %>
   <%= button_to "Destroy this course", @course, method: :delete %>
   <% end %>
-<% end %>
 </div>
