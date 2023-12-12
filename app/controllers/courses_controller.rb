@@ -79,23 +79,22 @@ class CoursesController < ApplicationController
 
   # POST /courses/1/users/1
   def register
-    if current_user.email == "teacher@teacher.com"
+    if current_user.id == 1
       redirect_to root_path
     end
 
-    @course.Capacity += 1
-
+    @course.Capacity -= 1
     current_user.registered_courses.append(@course.id)
     current_user.save
-    redirect_back fallback_location: root_path, notice: "Course was successfully registered." 
+    redirect_to root_path, notice: "Course was successfully registered." 
   end
 
   # DELETE /courses/1/users/1
   def drop
     current_user.registered_courses.delete(@course.id)
     current_user.save
-    @course.Capacity -= 1
-    redirect_back fallback_location: root_path, notice: "Course was successfully dropped." 
+    @course.Capacity += 1
+    redirect_to root_path, notice: "Course was successfully dropped." 
   end
 
   # POST /courses/search

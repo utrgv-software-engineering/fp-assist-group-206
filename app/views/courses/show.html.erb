@@ -3,8 +3,11 @@
 <%= render @course %>
 
 <div>
-  <%= link_to "Edit this course", edit_course_path(@course) %> |
-  <%= link_to "Back to courses", courses_path %>
-
-  <%= button_to "Destroy this course", @course, method: :delete %>
+<% if current_user.id == 1 %>
+    <%= link_to "Edit this course", edit_course_path(@course) %> |
+  <% if @course.Capacity == 50 %>
+    <%= button_to "Destroy this course", @course, method: :delete %>
+  <% end %>
+<% end %> 
+<%= link_to "Back to courses", courses_path %>
 </div>

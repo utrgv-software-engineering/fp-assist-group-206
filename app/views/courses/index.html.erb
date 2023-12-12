@@ -18,10 +18,12 @@
       <%= course.Capacity %>
     </p>
     <p>
-    <% if current_user.registered_courses.include? course.id %>
-    <%= button_to "Drop course", drop_course_path(course.id, current_user.id), method: :delete %>
-    <% else %>
-      <%= button_to "Register course", register_course_path(course.id, current_user.id), method: :post %>
+    <% if current_user.id != 1%>
+        <% if current_user.registered_courses.include? course.id %>
+          <%= button_to "Drop course", drop_course_path(course.id, current_user.id), method: :delete %>
+        <% else %>
+          <%= button_to "Register course", register_course_path(course.id, current_user.id), method: :post %>
+        <% end %>
     <% end %>
     </p>
     <p>
@@ -30,7 +32,10 @@
   <% end %>
 </div>
 
-<%= link_to "New course", new_course_path %>
+<!-- Only show "New course" link if logged in as a teacher; hide for students -->
+  <% if current_user.id == 1 %>
+    <%= link_to "New course", new_course_path %>
+  <% end %>
 
 <div class="search-form">
     <%= form_tag("/courses/search", method: :post) do %>
