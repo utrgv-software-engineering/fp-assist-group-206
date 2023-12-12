@@ -4,11 +4,10 @@
 
 <div>
 <% if current_user.id == 1 %>
-<% if @course.Capacity != 0 %>
-  <%= link_to "Edit this course", edit_course_path(@course) %>
-<% end %><% end %> |
-<%= link_to "Back to courses", courses_path %>
-<% if @course.Capacity == 50 && current_user.id == 1 %>
-  <%= button_to "Destroy this course", @course, method: :delete %>
+    <%= link_to "Edit this course", edit_course_path(@course) %> |
+  <% if @course.Capacity == 50 %>
+    <%= button_to "Destroy this course", @course, method: :delete %>
   <% end %>
+<% end %> 
+<%= link_to "Back to courses", courses_path %>
 </div>

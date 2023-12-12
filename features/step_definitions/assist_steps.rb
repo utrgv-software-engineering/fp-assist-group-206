@@ -2,7 +2,7 @@ Given('there are 3 courses and 2 users, teacher and student') do
     @course1 = create(:course)
     @course2 = create(:course)
     @course3 = create(:course) 
-    @teacher = create(:user)
+    @teacher = create(:user, id: 1)
     @student = create(:user)
 end
 
@@ -190,7 +190,13 @@ Then('I should not see the course in my list of registered courses') do
 end
 
 # Issue RAILAST206-29
-
-Given('the course capacity is empty') do
-  @course1.Capacity == 50
+Given('there are 2 courses and 2 users, teacher and student') do
+  @course1 = create(:course, Capacity: 50)
+  @course2 = create(:course, Capacity: 21)
+  @teacher = create(:user, id: 1)
+  @student = create(:user)
+end
+Given('the first course capacity is empty') do
+  puts "Course 1 Capacity: #{@course1.Capacity}"
+  @course1.Capacity = 50
 end
