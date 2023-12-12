@@ -189,3 +189,8 @@ Then('I should not see the course in my list of registered courses') do
   expect(page).not_to have_content(@course1)
 end
 
+# Issue RAILAST206-29
+
+Given('the course capacity is not full') do
+  @course1.Capacity != 0
+end
