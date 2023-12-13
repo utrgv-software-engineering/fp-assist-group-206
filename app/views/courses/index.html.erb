@@ -8,6 +8,7 @@
       <strong>CRN:</strong>
       <%= course.CRN %>
     </p>
+    <!-- For issue RAILAST206-34 -->
     <p id="description-<%= course.id %>" style="display: none;"><%= course.Description %></p>
     <p>
       <strong>Name:</strong>
@@ -18,6 +19,7 @@
       <%= course.Capacity %>
     </p>
     <p>
+    <!-- For issue RAILAST206-29 -->
     <% if current_user.id != 1%>
         <% if current_user.registered_courses.include? course.id %>
           <%= button_to "Drop course", drop_course_path(course.id, current_user.id), method: :delete %>
@@ -31,12 +33,12 @@
     </p>
   <% end %>
 </div>
-
+<!-- For issue RAILAST206-29 -->
 <!-- Only show "New course" link if logged in as a teacher; hide for students -->
   <% if current_user.id == 1 %>
     <%= link_to "New course", new_course_path %>
   <% end %>
-
+  <!-- For issue RAILAST206-36 -->
 <div class="search-form">
     <%= form_tag("/courses/search", method: :post) do %>
       <label for="crn">CRN:</label>

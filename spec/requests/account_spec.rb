@@ -8,7 +8,7 @@ RSpec.describe "Accounts", type: :request do
     before do
       sign_in student
     end
-    
+    # For issue RAILAST206-30
     it "redirects to the registered courses path" do
       get root_path
       if response.redirect?

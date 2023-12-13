@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# For issue RAILAST206-23
 RSpec.describe Course, type: :model do
   before do
     @user = create(:user)
