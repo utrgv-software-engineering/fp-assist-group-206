@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# For issue RAILAST206-22
 RSpec.feature 'Authentication', type: :feature do
   scenario 'non-signed-in users should only have access to the login page' do
     visit root_path

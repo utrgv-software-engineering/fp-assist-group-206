@@ -3,6 +3,7 @@
 <%= render @course %>
 
 <div>
+<!-- For issue RAILAST206-29 -->
 <% if current_user.id == 1 %>
     <%= link_to "Edit this course", edit_course_path(@course) %> |
   <% if @course.Capacity == 50 %>

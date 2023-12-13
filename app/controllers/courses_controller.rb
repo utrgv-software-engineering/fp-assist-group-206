@@ -3,6 +3,7 @@ class CoursesController < ApplicationController
   
   # GET /courses or /courses.json
   def index
+    # For issue RAILAST206-30
     # Check if the user is signed in
     if user_signed_in?
       # Redirect students to registered courses page only once
@@ -16,8 +17,8 @@ class CoursesController < ApplicationController
       redirect_to new_user_session_path
       return
     end
-  
-    # Rest of the code for rendering courses for other users
+    # For issue RAILAST206-35
+    # rendering courses for other users
     course_ids = params[:courses]
     if course_ids.present?
       @courses = Course.where(id: course_ids)
@@ -76,19 +77,18 @@ class CoursesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  # For issue RAILAST206-24
   # POST /courses/1/users/1
   def register
     if current_user.id == 1
       redirect_to root_path
     end
-
     @course.Capacity -= 1
     current_user.registered_courses.append(@course.id)
     current_user.save
     redirect_to root_path, notice: "Course was successfully registered." 
   end
-
+  # For issue RAILAST206-24
   # DELETE /courses/1/users/1
   def drop
     current_user.registered_courses.delete(@course.id)
@@ -96,7 +96,7 @@ class CoursesController < ApplicationController
     @course.Capacity += 1
     redirect_to root_path, notice: "Course was successfully dropped." 
   end
-
+  # For issue RAILAST206-36
   # POST /courses/search
   def search
     crn = params[:crn]

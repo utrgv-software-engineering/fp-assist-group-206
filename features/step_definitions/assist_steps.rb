@@ -132,7 +132,7 @@ Then('I should not be able to create the course') do
   expect(page).to have_content("Course capacity must be at least 20")
 end
 
-# search feature cucumber tests
+# search feature cucumber tests RAILAST206-36
 Given('there are several courses available') do
   @course1 = create(:course)
   @course2 = create(:course)
@@ -179,12 +179,12 @@ Then('I should see a message indicating that no courses were found for course na
   expect(page).to have_content("No courses found with Course Name InvalidCourseName.")
 end
 
-# Issue 24
+# For Issue RAILAST206-24 
 
 And('the Course Capacity is max') do
   @course1.Capacity == 0
 end
-
+# sad path
 Then('I should not see the course in my list of registered courses') do
   expect(page).not_to have_content(@course1)
 end
@@ -196,6 +196,7 @@ Given('there are 2 courses and 2 users, teacher and student') do
   @teacher = create(:user, id: 1)
   @student = create(:user)
 end
+
 Given('the first course capacity is empty') do
   puts "Course 1 Capacity: #{@course1.Capacity}"
   @course1.Capacity = 50
