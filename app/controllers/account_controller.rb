@@ -3,14 +3,13 @@ class AccountController < ApplicationController
     
     def index
         if !user_signed_in?
-            redirect_to new_user_session_path
+          redirect_to new_user_session_path
+        else
+            #for issue RAILAST206-41
+          @user = User.find(params[:id])
+          @courses = Course.where(id: @user.registered_courses)
         end
-        
-        @courses = []
-        @user.each do |course|
-            @courses.append(Course.find(course))
-        end
-    end
+      end
 
     private
     # Use callbacks to share common setup or constraints between actions.
