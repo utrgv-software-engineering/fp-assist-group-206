@@ -116,7 +116,7 @@ class CoursesController < ApplicationController
       end
     elsif course_name.present?
       # Search for courses with the specified name or partial name
-      @courses = Course.where("Name LIKE ?", "%#{course_name}%")
+      @courses = Course.all.select { |course| course.Name.include?(course_name) }
       if @courses.present?
         # Set flash message
         flash.now[:notice] = "Courses found with Course Name #{course_name}."
