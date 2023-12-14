@@ -85,10 +85,10 @@ production:
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  database: dbhost # CHANGE THIS TO YOUR OWN DATABASE NAME IN RENDER
+  database: dbhost_8zij # CHANGE THIS TO YOUR OWN DATABASE NAME IN RENDER
   username: dbhost_user # CHANGE THIS TO YOUR OWN DATABASE USERNAME IN RENDER
   password: <%= ENV['DATABASE_PASSWORD'] %> # DO NOT MODIFY THIS LINE!
   url: <%= ENV['DATABASE_URL'] %> # DO NOT MODIFY THIS LINE!
-  host: dpg-ckj1248lk5ic73b96u1g-a
+  host: dpg-clt5jpol5elc73dkatog-a
   port: 5432
   region: ohio
