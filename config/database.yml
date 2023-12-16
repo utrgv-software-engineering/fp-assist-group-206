@@ -77,8 +77,18 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
+#from issue RAILAST206-39
 production:
   <<: *default
-  database: assist_production
-  username: assist
-  password: <%= ENV["ASSIST_DATABASE_PASSWORD"] %>
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  database: dbhost_8zij # CHANGE THIS TO YOUR OWN DATABASE NAME IN RENDER
+  username: dbhost_user # CHANGE THIS TO YOUR OWN DATABASE USERNAME IN RENDER
+  password: <%= ENV['DATABASE_PASSWORD'] %> # DO NOT MODIFY THIS LINE!
+  url: <%= ENV['DATABASE_URL'] %> # DO NOT MODIFY THIS LINE!
+  host: dpg-clt5jpol5elc73dkatog-a
+  port: 5432
+  region: ohio

@@ -9,7 +9,8 @@ gem 'rails', '>= 7.0.0'
 gem 'puma'
 # Use SCSS for stylesheets
 gem 'sass-rails'
-
+# for search feature test cases
+gem 'rails-controller-testing'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbo-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -62,7 +63,10 @@ group :test do
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'capybara-screenshot'
+  gem 'shoulda-matchers', '~> 5.0'
 end
+
+
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -3,8 +3,27 @@ class CoursesController < ApplicationController
   
   # GET /courses or /courses.json
   def index
-    if !user_signed_in?
+    # For issue RAILAST206-30
+    # Check if the user is signed in
+    if user_signed_in?
+      # Redirect students to registered courses page only once
+      if current_user.id != 1 && !session[:redirected_to_registered_courses]
+        session[:redirected_to_registered_courses] = true
+        redirect_to registered_courses_path(id: current_user.id)
+        return
+      end
+    else
+      # Redirect non-signed-in users to sign-in page
       redirect_to new_user_session_path
+      return
+    end
+    # For issue RAILAST206-35
+    # rendering courses for other users
+    course_ids = params[:courses]
+    if course_ids.present?
+      @courses = Course.where(id: course_ids)
+    else
+      @courses = Course.all
     end
   end
 
@@ -58,25 +77,62 @@ class CoursesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  # For issue RAILAST206-24
   # POST /courses/1/users/1
   def register
-    if current_user.email == "teacher@teacher.com"
+    if current_user.id == 1
       redirect_to root_path
     end
-
+    @course.Capacity -= 1
     current_user.registered_courses.append(@course.id)
     current_user.save
-    redirect_back fallback_location: root_path, notice: "Course was successfully registered." 
+    redirect_to root_path, notice: "Course was successfully registered." 
   end
-
+  # For issue RAILAST206-24
   # DELETE /courses/1/users/1
   def drop
     current_user.registered_courses.delete(@course.id)
     current_user.save
-    redirect_back fallback_location: root_path, notice: "Course was successfully dropped." 
+    @course.Capacity += 1
+    redirect_to root_path, notice: "Course was successfully dropped." 
   end
-
+  # For issue RAILAST206-36
+  # POST /courses/search
+  def search
+    crn = params[:crn]
+    course_name = params[:course_name]
+    if crn.present?
+      # Find the course with the specified CRN
+      @course = Course.find_by(CRN: crn)
+      if @course
+        # Set flash message
+        flash[:notice] = "Course found with CRN #{crn}."
+        # Redirect to the show page for the course
+        redirect_to course_path(@course)
+      else
+        # Handle the case when no course is found with the specified CRN
+        flash[:alert] = "No course found with CRN #{crn}."
+        redirect_to courses_path
+      end
+    elsif course_name.present?
+      # Search for courses with the specified name or partial name
+      @courses = Course.all.select { |course| course.Name.include?(course_name) }
+      if @courses.present?
+        # Set flash message
+        flash.now[:notice] = "Courses found with Course Name #{course_name}."
+        # Render the view with the filtered courses
+        redirect_to courses_path(courses: @courses.pluck(:id))
+      else
+        # Handle the case when no courses are found with the specified name
+        flash[:alert] = "No courses found with Course Name #{course_name}."
+        redirect_to courses_path
+      end
+    else
+      # Handle the case when no search criteria is provided
+      flash[:alert] = "Please provide search criteria."
+      redirect_to courses_path
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
